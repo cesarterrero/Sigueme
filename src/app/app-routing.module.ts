@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { canActivate, AuthPipe, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin: () => AuthPipe = () => redirectUnauthorizedTo(['/firebase/auth/sign-in']);
+
 const routes: Routes = [
   {
     path: '',
@@ -34,6 +38,7 @@ const routes: Routes = [
   },
   {
     path: 'app',
+    ...canActivate(redirectUnauthorizedToLogin),
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
@@ -71,6 +76,7 @@ const routes: Routes = [
   },
   {
     path: 'maps',
+    ...canActivate(redirectUnauthorizedToLogin),
     loadChildren: () => import('./maps/maps.module').then(m => m.MapsPageModule)
   },
   {

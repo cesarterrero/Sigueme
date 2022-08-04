@@ -46,18 +46,7 @@ const routes: Routes = [
     ComponentsModule,
     RouterModule.forChild(routes),
     // ? Correct way to initialize Firebase using the Capacitor Firebase plugin mixed with the Firebase JS SDK (@angular/fire)
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => {
-      if (Capacitor.isNativePlatform()) {
-        return initializeAuth(getApp(), {
-          persistence: indexedDBLocalPersistence
-          // persistence: browserLocalPersistence
-          // popupRedirectResolver: browserPopupRedirectResolver
-        });
-      } else {
-        return getAuth();
-      }
-    })
+    
   ],
   providers: [FirebaseAuthService]
 })

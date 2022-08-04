@@ -55,7 +55,7 @@ export class FirebaseSignInPage {
       if (result.error) {
         this.manageAuthWithProvidersErrors(result.error);
       } else {
-        this.redirectLoggedUserToProfilePage();
+        this.redirectLoggedUserToApp();
       }
     });
 
@@ -64,7 +64,7 @@ export class FirebaseSignInPage {
       if (!stateChange.user) {
         this.manageAuthWithProvidersErrors('No user logged in');
       } else {
-        this.redirectLoggedUserToProfilePage();
+        this.redirectLoggedUserToApp();
       }
     });
   }
@@ -77,7 +77,7 @@ export class FirebaseSignInPage {
       .then((result: SignInResult) => {
         // ? This gives you a Facebook Access Token. You can use it to access the Facebook API.
         // const token = result.credential.accessToken;
-        this.redirectLoggedUserToProfilePage();
+        this.redirectLoggedUserToApp();
       })
       .catch((error) => {
         this.manageAuthWithProvidersErrors(error.message);
@@ -95,7 +95,7 @@ export class FirebaseSignInPage {
       .then((result) => {
         // ? This gives you a Google Access Token. You can use it to access the Google API.
         // const token = result.credential.accessToken;
-        this.redirectLoggedUserToProfilePage();
+        this.redirectLoggedUserToApp();
       })
       .catch((error) => {
         this.manageAuthWithProvidersErrors(error.message);
@@ -113,7 +113,7 @@ export class FirebaseSignInPage {
       .then((result) => {
         // ? This gives you a Twitter Access Token. You can use it to access the Twitter API.
         // const token = result.credential.accessToken;
-        this.redirectLoggedUserToProfilePage();
+        this.redirectLoggedUserToApp();
       })
       .catch((error) => {
         this.manageAuthWithProvidersErrors(error.message);
@@ -129,7 +129,7 @@ export class FirebaseSignInPage {
     try {
       await this.firebaseAuthService.signInWithApple()
       .then((result) => {
-        this.redirectLoggedUserToProfilePage();
+        this.redirectLoggedUserToApp();
       })
       .catch((error) => {
         this.manageAuthWithProvidersErrors(error.message);
@@ -145,7 +145,7 @@ export class FirebaseSignInPage {
     try {
       await this.firebaseAuthService.signInWithEmail(this.loginForm.value['email'], this.loginForm.value['password'])
       .then((result) => {
-        this.redirectLoggedUserToProfilePage();
+        this.redirectLoggedUserToApp();
       })
       .catch((error) => {
         this.submitError = error.message;
@@ -156,14 +156,14 @@ export class FirebaseSignInPage {
   }
 
   // ? Once the auth provider finished the authentication flow, and the auth redirect completes, hide the loader and redirect the user to the profile page
-  private redirectLoggedUserToProfilePage(): void {
+  private redirectLoggedUserToApp(): void {
     // As we are calling the Angular router navigation inside a subscribe method, the navigation will be triggered outside Angular zone.
     // That's why we need to wrap the router navigation call inside an ngZone wrapper
     this.ngZone.run(() => {
       // Get previous URL from our custom History Helper
       // If there's no previous page, then redirect to profile
       // const previousUrl = this.historyHelper.previousUrl || 'firebase/auth/profile';
-      const previousUrl = 'firebase/auth/profile';
+      const previousUrl = 'maps';
 
       // No need to store in the navigation history the sign-in page with redirect params (it's just a a mandatory mid-step)
       // Navigate to profile and replace current url with profile

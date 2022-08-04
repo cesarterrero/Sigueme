@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { map } from 'rxjs/operators';
 
-import { canActivate, AuthPipeGenerator } from '@angular/fire/auth-guard';
+import { canActivate, AuthPipeGenerator, redirectUnauthorizedTo, AuthPipe } from '@angular/fire/auth-guard';
 
 import { FirebaseSignUpPage } from './firebase-sign-up.page';
 import { ComponentsModule } from '../../../components/components.module';
@@ -17,7 +17,7 @@ import { ComponentsModule } from '../../../components/components.module';
 const redirectLoggedInToProfile: AuthPipeGenerator = (next) => map(user => {
   // ? When queryParams['auth-redirect'] don't redirect because we want the component to handle the redirection
   if (user !== null && !next.queryParams['auth-redirect']) {
-    return ['firebase/auth/profile'];
+    return ['maps'];
   } else {
     return true;
   }
