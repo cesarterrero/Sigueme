@@ -1,5 +1,6 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 import { Geolocation } from '@capacitor/geolocation';
 
@@ -33,7 +34,7 @@ export class MapsPage implements AfterViewInit {
   
   loadingElement: any;
 
-  constructor(private loadingController: LoadingController) { }
+  constructor(private loadingController: LoadingController, public router: Router) { }
 
   ngAfterViewInit() {
     // GoogleMapComponent should be available
@@ -90,5 +91,9 @@ export class MapsPage implements AfterViewInit {
       console.log('Error getting current location', error);
 
     }).finally(() => this.dismissLoader());
+  }
+
+  public navigateToReport(): void {
+    this.router.navigate(['forms-and-validations']);
   }
 }

@@ -18,7 +18,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { Capacitor } from '@capacitor/core';
 
-import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getApp, initializeApp, provideFirebaseApp, } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
 
 
@@ -45,6 +46,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
     provideAuth(() => {
       if (Capacitor.isNativePlatform()) {
         return initializeAuth(getApp(), {
@@ -55,7 +57,7 @@ export function createTranslateLoader(http: HttpClient) {
       } else {
         return getAuth();
       }
-    })
+    }),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

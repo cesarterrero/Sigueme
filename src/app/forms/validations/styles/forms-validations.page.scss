@@ -31,7 +31,7 @@ ion-content {
     .inputs-list {
       --ion-item-background: var(--page-background);
 
-      padding: var(--page-margin) var(--page-margin) calc(var(--page-margin) * 2);
+      padding: var(--page-margin) var(--page-margin);
 
       ion-list-header {
         padding-inline-start: 0px;
@@ -101,4 +101,13 @@ ion-content {
   .alert-message {
     display: none;
   }
+}
+
+.photo {
+  padding: var(--page-margin) var(--page-margin) calc(var(--page-margin) * 2);
+  margin-bottom: calc(var(--page-margin) * 4);
+}
+
+.photo-label {
+  margin-bottom: calc(var(--page-margin) * 0.5);
 }

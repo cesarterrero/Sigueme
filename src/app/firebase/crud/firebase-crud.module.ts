@@ -36,8 +36,6 @@ const firebaseRoutes: Routes = [
     IonicModule,
     CommonModule,
     RouterModule.forChild(firebaseRoutes),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore())
   ],
 })
 export class FirebaseCrudModule {}
