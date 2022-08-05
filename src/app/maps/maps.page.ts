@@ -12,13 +12,17 @@ import { GoogleMapComponent } from '../components/google-map/google-map.componen
     './styles/maps.page.scss'
   ]
 })
+
+
 export class MapsPage implements AfterViewInit {
+
+  
 
   @ViewChild(GoogleMapComponent, { static: false }) _GoogleMap: GoogleMapComponent;
   map: google.maps.Map;
   mapOptions: google.maps.MapOptions = {
     zoom: 15,
-    center: {lat: -34.9199842, lng: -56.149849},
+    
     // uncomment the following line if you want to remove the default Map controls
     disableDefaultUI: true,
     
@@ -66,18 +70,20 @@ export class MapsPage implements AfterViewInit {
 
       const current_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       this.map.panTo(current_location);
+      
+      
 
       // add a marker
       const marker = new google.maps.Marker({
         position: current_location,
         title: 'Mi ubicacion',
         animation: google.maps.Animation.DROP,
-        icon:'./assets/cara-feliz (2).png',
+        icon:'./assets/la-seguridad.png',
         
       });
       
-
-      marker.setMap(this.map)
+      
+      marker.setMap(this.map);
       
 
     }).catch((error) => {

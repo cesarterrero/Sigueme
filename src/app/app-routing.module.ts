@@ -38,7 +38,7 @@ const routes: Routes = [
   },
   {
     path: 'app',
-    ...canActivate(redirectUnauthorizedToLogin),
+    // ...canActivate(redirectUnauthorizedToLogin),
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
@@ -76,7 +76,7 @@ const routes: Routes = [
   },
   {
     path: 'maps',
-    ...canActivate(redirectUnauthorizedToLogin),
+    // ...canActivate(redirectUnauthorizedToLogin),
     loadChildren: () => import('./maps/maps.module').then(m => m.MapsPageModule)
   },
   {
