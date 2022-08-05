@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
     './styles/forms-validations.page.scss'
   ]
 })
+
+
+
 export class FormsValidationsPage implements OnInit {
   validationsForm: FormGroup;
 
