@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 
 export class FormsValidationsPage implements OnInit {
   validationsForm: FormGroup;
+  picImage: any;
 
   validations = {
     'id': [{ type: 'required', message: 'El número de reporte es requerido.' }],
@@ -69,6 +70,7 @@ export class FormsValidationsPage implements OnInit {
     });
 
     if(image) {
+      this.picImage = "data:image/png;base64," + image.base64String;
       this.setImageToForm(image);
     }
   }

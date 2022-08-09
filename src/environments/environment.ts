@@ -5,11 +5,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyC5QK355uuknu0_ldVxFqqNqgp9oJi_eLc',
-    authDomain: 'ion4fullpwa.firebaseapp.com',
-    databaseURL: 'https://ion4fullpwa.firebaseio.com',
-    projectId: 'ion4fullpwa',
-    storageBucket: 'ion4fullpwa.appspot.com'
+    apiKey: 'AIzaSyBjsP5iGoI3kqAvbR14UZ1wpo096Mf6z5Y',
+    authDomain: 'sigueme-44162.firebaseapp.com',
+    databaseURL: 'https://sigueme-44162-default-rtdb.firebaseio.com/',
+    projectId: 'sigueme-44162',
+    storageBucket: 'sigueme-44162.firebaseapp.com'
   },
   appShellConfig: {
     debug: false,

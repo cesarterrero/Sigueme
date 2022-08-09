@@ -66,6 +66,9 @@
       <ion-row class="photo-label">
         <ion-label>Agregar una foto</ion-label>
       </ion-row>
+      <ion-row *ngIf="picImage">
+        <ion-img class="image" [src]="picImage"></ion-img>
+      </ion-row>
       <ion-row>
         <ion-fab>
           <ion-fab-button (click)="addPhotoToGallery()">
