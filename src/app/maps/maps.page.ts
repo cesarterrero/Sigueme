@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -15,10 +15,7 @@ import { GoogleMapComponent } from '../components/google-map/google-map.componen
 })
 
 
-export class MapsPage implements AfterViewInit {
-
-  
-
+export class MapsPage implements OnInit, AfterViewInit {
   @ViewChild(GoogleMapComponent, { static: false }) _GoogleMap: GoogleMapComponent;
   map: google.maps.Map;
   mapOptions: google.maps.MapOptions = {
@@ -26,15 +23,16 @@ export class MapsPage implements AfterViewInit {
     
     // uncomment the following line if you want to remove the default Map controls
     disableDefaultUI: true,
-    
-    
-    
   };
 
-  
   loadingElement: any;
+  markers: google.maps.Marker[];
 
   constructor(private loadingController: LoadingController, public router: Router) { }
+
+  ngOnInit(): void {
+    this.markers = [];
+  }
 
   ngAfterViewInit() {
     // GoogleMapComponent should be available
@@ -42,8 +40,9 @@ export class MapsPage implements AfterViewInit {
       this.map = map;
       console.log('ngAfterViewInit - Google map ready');
     });
-    this.createLoader();
-    this.geolocateMe();
+    this.createLoader().then(() => {
+      this.geolocateMe();
+    });
   }
 
   async createLoader() {
@@ -62,17 +61,15 @@ export class MapsPage implements AfterViewInit {
     }
   }
 
-  public geolocateMe(): void {
-    
-    this.presentLoader();
-    let borrarmarcador = new google.maps.Marker();
-    borrarmarcador.setMap(null);
-    Geolocation.getCurrentPosition().then(position => {
+  public async geolocateMe(): Promise<void> {
+    await this.presentLoader();
+    this.setMarker();
+  }
 
+  setMarker() {
+    Geolocation.getCurrentPosition().then(position => {
       const current_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       this.map.panTo(current_location);
-      
-      
 
       // add a marker
       const marker = new google.maps.Marker({
@@ -80,17 +77,29 @@ export class MapsPage implements AfterViewInit {
         title: 'Mi ubicacion',
         animation: google.maps.Animation.DROP,
         icon:'./assets/la-seguridad.png',
-        
       });
       
+      this.removeMarkers();
+      this.markers.push(marker);
+      this.markers.forEach((marker: google.maps.Marker) => {
+        const { lat, lng } = marker.getPosition();
+        console.log(`LAT: ${lat()}, LNG ${lng()}`);
+        marker.setMap(this.map);
+      });
       
-      marker.setMap(this.map);
-      
-
     }).catch((error) => {
       console.log('Error getting current location', error);
 
     }).finally(() => this.dismissLoader());
+  }
+
+  removeMarkers() {
+    if(this.markers) {
+      this.markers.forEach((marker: google.maps.Marker) => {
+        marker.setMap(null);
+      });
+    }
+    this.markers = [];
   }
 
   public navigateToReport(): void {
