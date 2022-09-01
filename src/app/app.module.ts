@@ -22,6 +22,8 @@ import { getApp, initializeApp, provideFirebaseApp, } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
 
+import { ReportsService } from './reports.service';
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -60,6 +62,7 @@ export function createTranslateLoader(http: HttpClient) {
     }),
   ],
   providers: [
+    ReportsService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: APP_INITIALIZER,

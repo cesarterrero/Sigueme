@@ -6,6 +6,9 @@ import { Share } from '@capacitor/share';
 import { switchMap } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 
+import { ReportsService } from '../reports.service';
+import { Report } from '../report.model';
+
 @Component({
   selector: 'app-video-playlist',
   templateUrl: './video-playlist.page.html',
@@ -19,6 +22,7 @@ export class VideoPlaylistPage implements OnInit {
   start_playing = false;
   api: VgApiService;
   video_playlist_model: VideoPlaylistModel;
+  reports: Report[]
 
   @HostBinding('class.is-shell') get isShell() {
     return (this.video_playlist_model && this.video_playlist_model.isShell) ? true : false;
@@ -26,7 +30,8 @@ export class VideoPlaylistPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    @Inject(PLATFORM_ID) private platformId: object
+    @Inject(PLATFORM_ID) private platformId: object,
+    private reportsService: ReportsService
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +54,17 @@ export class VideoPlaylistPage implements OnInit {
         }
       },
       error: (error) => console.log(error)
+    });
+
+    this.reportsService.getReports().then((response) => {
+      this.reports = response.data.map((report) => {
+        var { date, image, ...rest } = report;
+        const formattedDate = new Date(date).toLocaleDateString("en-us");
+        date = formattedDate;
+        const formattedImage = 'data:image/jpg;base64,' + image;
+        image = formattedImage;
+        return { date, image, ...rest }
+      })
     });
   }
 

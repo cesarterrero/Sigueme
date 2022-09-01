@@ -6,6 +6,8 @@ import { ReportCrudService } from './report-crud.service';
 import { ImageCrudService } from './image-crud.service';
 import { Router } from '@angular/router';
 
+import { ReportsService } from '../../reports.service';
+
 @Component({
   selector: 'app-forms-validations-page',
   templateUrl: './forms-validations.page.html',
@@ -33,7 +35,7 @@ export class FormsValidationsPage implements OnInit {
     'image': [{ type: 'required', message: 'El correo es requerido.' }]
   };
 
-  constructor(private platform: Platform, private reportService: ReportCrudService, private imageService: ImageCrudService, public router: Router) { }
+  constructor(private platform: Platform, private reportService: ReportCrudService, private imageService: ImageCrudService, public router: Router, private reportsService: ReportsService) { }
 
   ngOnInit(): void {
     const sequence = this.getRandomInt();
@@ -89,7 +91,11 @@ export class FormsValidationsPage implements OnInit {
 
   onSubmit(values) {
     // this.saveImage(values.image, values.id);
-    this.reportService.createReport(values);
+    var formattedDate = new Date(values.date).toISOString();
+    values.date = formattedDate;
+    values.image = values.image.base64String
+    this.reportsService.createReport(values);
+    // this.reportService.createReport(values);
     this.router.navigate(['maps']);
   }
 }
